@@ -1,0 +1,11 @@
+Contraseña de Usuario cursobdproteco = cursobd
+Constrseña de Super Usuario = cursobd
+Contraseña de Usuario Oracle = oracle
+contraseña de sys = system1
+Constraseña de system  system1
+
+sqlplus / as sysdba
+su -l oracle
+startup
+***Recordar que cada vez que inicies Sesión en sqlplus se debe de ejecutar el comando startup***
+

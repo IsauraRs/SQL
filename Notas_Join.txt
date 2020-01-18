@@ -1,0 +1,125 @@
+CREATE TABLE cliente2(
+    cliente2_id NUMBER (8) PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL,
+    ap_paterno VARCHAR2(30) NOT NULL,
+    ap_materno VARCHAR2(30) NOT NULL
+);
+
+CREATE TABLE tarjeta_credito2(
+    tarjeta_credito2_id NUMBER(8) PRIMARY KEY,
+    numero NUMBER(30) NOT NULL,
+    tipo VARCHAR2(30) NOT NULL,
+    cliente2_id NOT NULL CONSTRAINT cliente2_id_fk REFERENCES cliente2(cliente_id)
+); 
+#Obtener cliente_id nombre ap_paterno ap_materno
+#tarjeta_credito2_id
+numero
+tipo
+
+donde cliente_id =cliente_id
+
+se pone un alias a los campos del siguiente modo:
+alias.nombre_tabla
+pej: c.cliente_id
+t. tarjeta_credito2_id
+
+c.cliente_id = t.cliente_id
+
+SELECT c.cliente_id, c.nombre, c.ap_paterno, c.ap_materno,
+t.tarjeta_credito2_id, t.numero, t.tipo 
+FROM cliente2 c
+JOIN tarjeta_credito2 t
+ON c.cliente_id = t.cliente2_id;
+
+INSERT INTO cliente2(cliente_id, nombre, ap_paterno, ap_materno) VALUES (1001,'Jimena', 'Morales', 'Rosales');
+INSERT INTO cliente2(cliente_id, nombre, ap_paterno, ap_materno) VALUES (1002,'Hugo', 'Alcazar', 'Benitez');
+INSERT INTO cliente2(cliente_id, nombre, ap_paterno, ap_materno) VALUES (1003,'Fernando', 'Fernando', 'Perez');
+INSERT INTO cliente2(cliente_id, nombre, ap_paterno, ap_materno) VALUES (1004,'Jorge', 'Jorge', 'Solano');
+INSERT INTO cliente2(cliente_id, nombre, ap_paterno, ap_materno) VALUES (1005,'Gerardo', 'Gerardo', 'Mejia');
+
+INSERT INTO tarjeta_credito2(cliente2_id, tarjeta_credito2_id, numero, tipo) VALUES (1002, 3500, 9876543234567890, 'VISA');
+INSERT INTO tarjeta_credito2(cliente2_id, tarjeta_credito2_id, numero, tipo) VALUES (1003, 3501, 9876543234567890, 'MASTER');
+INSERT INTO tarjeta_credito2(cliente2_id, tarjeta_credito2_id, numero, tipo) VALUES (1004, 3502, 9876543234567890, 'AMERICAN');
+
+Obtener artículos donados por william Harvey
+
+SELECT a.nombre, s.clave, s.status_articulo_id
+FROM articulo a
+JOIN status_articulo s
+ON a.status_articulo_id = s.status_articulo_id
+JOIN articulo_famoso f 
+ON a.status_articulo_id = f.articulo_id
+WHERE nombre_completo = 'William Harvey';
+
+Natural join --- no se ponen alias
+
+SELECT articulo_id, nombre, clave_articulo
+FROM articulo
+JOIN status_articulo sa USING (status_articulo_id)
+NATURAL JOIN articulo_donado
+JOIN pais p USING(pais_id)
+WHERE p.descripcion = 'BELGICA'
+and sa.clave = 'ENTREGADO';
+
+------------------------------------------------------
+
+CREATE TABLE a(
+    n NUMERIC(3)
+);
+
+CREATE TABLE b(
+    m NUMERIC(3)
+);
+
+INSERT INTO a(n) VALUES(1);
+INSERT INTO a(n) VALUES(2);
+INSERT INTO a(n) VALUES(3);
+INSERT INTO a(n) VALUES(4);
+-----------
+INSERT INTO b(m) VALUES(3);
+INSERT INTO b(m) VALUES(4);
+INSERT INTO b(m) VALUES(5);
+INSERT INTO b(m) VALUES(6);
+
+SELECT a.n
+FROM a
+LEFT JOIN b ON b.m=a.n;
+
+CREATE TABLE estudiantej(
+    estudiantej_id NUMBER(20) PRIMARY KEY,
+    nombre VARCHAR2(40) NOT NULL,
+    ap_paterno VARCHAR2(40) NOT NULL,
+    ap_materno VARCHAR2(40) NOT NULL,
+    beca_id NUMBER(20)
+);
+
+CREATE TABLE beca(
+    beca_id NUMBER(20),
+    tipo VARCHAR2(40),
+    duracion NUMBER(3),
+    monto NUMBER(10)
+);
+
+CARGAS
+
+INSERT INTO estudiantej(estudiantej_id, nombre, ap_paterno, ap_materno, beca_id) VALUES(2001, 'MARIA', 'JIMENEZ', 'SALAZAR', 500);
+INSERT INTO estudiantej(estudiantej_id, nombre, ap_paterno, ap_materno) VALUES(2002, 'RODRIGUEZ', 'BENITEZ', 'BENITEZ');
+INSERT INTO estudiantej(estudiantej_id, nombre, ap_paterno, ap_materno, beca_id) VALUES(2003, 'ARMANDO', 'ZARATE', 'MARTINEZ', 501);
+INSERT INTO estudiantej(estudiantej_id, nombre, ap_paterno, ap_materno) VALUES(2004, 'RODRIGO', 'MUNGUIA', 'SOLANO');
+INSERT INTO estudiantej(estudiantej_id, nombre, ap_paterno, ap_materno, beca_id) VALUES(2005, 'JULIO', 'LUNA', 'MEJIA', 502);
+----
+INSERT INTO beca(beca_id, tipo, duracion, monto) VALUES(500, 'ESCOLARIDAD', 5, 6000);
+INSERT INTO beca(beca_id, tipo, duracion, monto) VALUES(501, 'ALIMENTICIA', 2, 3000);
+INSERT INTO beca(beca_id, tipo, duracion, monto) VALUES(502, 'VITALICIA', 1, 1000);
+INSERT INTO beca(beca_id, tipo, duracion, monto) VALUES(503, 'TEMPROAL', 1, 1500);
+
+SELECT * 
+FROM estudiantej e
+LEFT OUTER JOIN beca b
+ON e.beca_id = b.beca_id;
+
+SELECT * 
+FROM estudiantej e
+RIGHT OUTER JOIN beca b
+ON e.beca_id = b.beca_id;
+)
